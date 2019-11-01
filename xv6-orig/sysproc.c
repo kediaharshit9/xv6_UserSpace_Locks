@@ -6,6 +6,11 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "spinlock.h"
+
+int count;
+struct spinlock count_lock;
+// uint count_lock;
 
 int
 sys_fork(void)
@@ -88,4 +93,49 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+int
+sys_counter_init(void)
+{ 
+  initlock(&count_lock,"Mohit");
+  // count_lock=0;
+  count = 0;
+  return 1;
+}
+
+
+int
+sys_counter_get(void)
+{
+  return count;
+}
+
+int
+sys_counter_set(void)
+{
+  int n;
+  argint(0, &n);
+  // cprintf("%d\n", arg);
+  count = n;
+  return 1;
+}
+
+int
+sys_my_lock(void)
+{
+
+  // while(xchg(&count_lock, 1) != 0 )
+  //   ;
+  acquire(&count_lock);
+  return 0;
+}
+
+int
+sys_my_unlock(void)
+{
+  release(&count_lock);
+  // count_lock=0;
+  // cprintf("Unocking\n");
+  return 0;
 }
