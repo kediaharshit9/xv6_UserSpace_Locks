@@ -9,8 +9,8 @@
 #include "spinlock.h"
 
 int count;
-struct spinlock count_lock;
-// uint count_lock;
+// struct spinlock count_lock;
+uint count_lock;
 
 int
 sys_fork(void)
@@ -98,8 +98,8 @@ sys_uptime(void)
 int
 sys_counter_init(void)
 { 
-  initlock(&count_lock,"Mohit");
-  // count_lock=0;
+  // initlock(&count_lock,"Mohit&Harshit");
+  count_lock=0;
   count = 0;
   return 1;
 }
@@ -127,15 +127,30 @@ sys_my_lock(void)
 
   // while(xchg(&count_lock, 1) != 0 )
   //   ;
-  acquire(&count_lock);
+  // acquire(&count_lock);
+  int cnt ;
+    while(1)
+  {
+      cnt = 20;
+      while(xchg(&count_lock, 1) != 0)
+      {
+          cnt--;
+          if(cnt==0) break;
+      }
+
+      if(cnt == 0)
+          yield();
+      else
+          break;
+  }
   return 0;
 }
 
 int
 sys_my_unlock(void)
 {
-  release(&count_lock);
-  // count_lock=0;
+  // release(&count_lock);
+  count_lock=0;
   // cprintf("Unocking\n");
   return 0;
 }

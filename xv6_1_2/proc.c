@@ -329,7 +329,7 @@ scheduler(void)
   for(;;){
     // Enable interrupts on this processor.
     sti();
-    cprintf("scheduler \n");
+    // cprintf("scheduler \n");
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
@@ -367,11 +367,11 @@ sched(void)
 {
   int intena;
   struct proc *p = myproc();
-
+  // cprintf("HELO\n");
   if(!holding(&ptable.lock))
     panic("sched ptable.lock");
-  // if(mycpu()->ncli != 1)
-  //   panic("sched locks");
+  if(mycpu()->ncli != 1)
+    panic("sched locks");
   if(p->state == RUNNING)
     panic("sched running");
   if(readeflags()&FL_IF)

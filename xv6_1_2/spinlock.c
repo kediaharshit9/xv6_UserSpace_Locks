@@ -29,21 +29,23 @@ acquire(struct spinlock *lk)
     panic("acquire");
 
   // The xchg is atomic.
-  int cnt;
-  while(1)
-  {
-      cnt = 20;
-      while(xchg(&lk->locked, 1) != 0)
-      {
-          cnt--;
-          if(cnt==0) break;
-      }
+  // int cnt;
+    while(xchg(&lk->locked, 1) != 0)
+    ;
+  // while(1)
+  // {
+  //     cnt = 20;
+  //     while(xchg(&lk->locked, 1) != 0)
+  //     {
+  //         cnt--;
+  //         if(cnt==0) break;
+  //     }
 
-      if(cnt == 0)
-          yield();
-      else
-          break;
-  }
+  //     if(cnt == 0)
+  //         yield();
+  //     else
+  //         break;
+  // }
 
   // Tell the C compiler and the processor to not move loads or stores
   // past this point, to ensure that the critical section's memory
