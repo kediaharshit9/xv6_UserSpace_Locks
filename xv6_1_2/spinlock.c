@@ -17,6 +17,44 @@ initlock(struct spinlock *lk, char *name)
   lk->cpu = 0;
 }
 
+void 
+initmylock(uint* lk){
+	*lk=0;
+}
+
+void
+myacquire(uint *lk){
+    while(xchg(lk, 1) != 0)
+    ;
+}
+
+void
+futexacquire(uint *lk,int c){
+	int cnt;
+    while(1)
+    {	
+    	cnt=c;
+		while(xchg(lk, 1) != 0)
+		{
+	    	cnt--;
+	    	if(cnt==0) break;
+	 	}
+
+	  	if(cnt == 0){
+	    	yield();
+	  	}
+	  	else
+	    	break;
+	}
+}
+
+void 
+myrelease(uint *lk){
+  *lk=0;
+}
+
+
+
 // Acquire the lock.
 // Loops (spins) until the lock is acquired.
 // Holding a lock for a long time may cause
@@ -32,20 +70,6 @@ acquire(struct spinlock *lk)
   // int cnt;
     while(xchg(&lk->locked, 1) != 0)
     ;
-  // while(1)
-  // {
-  //     cnt = 20;
-  //     while(xchg(&lk->locked, 1) != 0)
-  //     {
-  //         cnt--;
-  //         if(cnt==0) break;
-  //     }
-
-  //     if(cnt == 0)
-  //         yield();
-  //     else
-  //         break;
-  // }
 
   // Tell the C compiler and the processor to not move loads or stores
   // past this point, to ensure that the critical section's memory

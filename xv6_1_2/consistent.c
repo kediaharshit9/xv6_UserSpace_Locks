@@ -6,43 +6,72 @@ int
 main(int argc, char *argv[])
 {
 	counter_init();
-	int rc = fork();
+	// int rc = fork();
+	int y=uptime();
 
-	int x;
-
-	// if(rc==0)
-	// {
-	// 	while(1) printf(1, "%d\n", getpid());
-	// }
-	// else
-	// {
-	// 	while(1) printf(1, "%d\n", getpid());
-	// }
-
-	if(rc!=0)
+	// int x;
+	if(fork()==0)
 	{
-		
-		for(int i=0; i<10000; i++)
+
+
+		for(int i=0; i<1000000; i++)
 		{
-			my_lock();
-			x=counter_get();
-			counter_set(x+1);	
-			my_unlock();
+			// my_lock();
+			// x=counter_get();
+			// counter_set(x+1);	
+			// my_unlock();
+			printf(1, "%d\n",uptime());
+			// }
 		}
-	
+		// printf(1, "%d %d\n",getpid(), counter_get());
 	}
 	else
-	{
-		for(int i=0; i<10000 ;i++)
+	{	
+		if(fork()==0)
 		{
-			my_lock();
-			x=counter_get();
-			counter_set(x+1);
-			my_unlock();
-		}	
-	    
+			for(int i=0; i<1000000; i++)
+			{
+				// my_lock();
+				// x=counter_get();
+				// counter_set(x+1);	
+				// my_unlock();
+				// printf(1, "%d\n",uptime());
+			}
+			// printf(1, "%d %d\n",getpid(), counter_get());
+		}
+		else
+		{
+
+			if(fork()==0)
+			{
+
+
+				for(int i=0; i<1000000; i++)
+				{
+					// my_lock();
+					// x=counter_get();
+					// counter_set(x+1);	
+					// my_unlock();
+				}
+				// printf(1, "%d %d\n",getpid(), counter_get());
+			}
+			else
+			{		
+				for(int i=0; i<100000;i++)
+				{
+					// my_lock();
+					// x=counter_get();
+					// counter_set(x+1);
+					// my_unlock();
+				}	
+				// printf(1, "%d %d\n",getpid(), counter_get());
+				wait();wait();wait();
+				printf(1, "%d\n",uptime()-y);
+			}
+	    }
 	}
-	printf(1, "%d %d\n",getpid(), counter_get());
-	wait();
+	
+
+
 	exit();
 }
