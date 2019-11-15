@@ -9,6 +9,7 @@
 #include "spinlock.h"
 
 
+
 int count;
 uint count_lock;
 
@@ -120,10 +121,16 @@ sys_counter_set(void)
 }
 
 int
-sys_my_lock(void)
+sys_my_lock_spin(void)
 {
-  // futexacquire(&count_lock,1000);
-  myacquire(&count_lock);
+  spinacquire(&count_lock);
+  return 0;
+}
+
+int
+sys_my_lock_futex(void)
+{
+  futexacquire(&count_lock,1000);
   return 0;
 }
 

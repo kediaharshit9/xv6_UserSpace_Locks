@@ -132,7 +132,7 @@ void            initlock(struct spinlock*, char*);
 void            release(struct spinlock*);
 void            pushcli(void);
 void            popcli(void);
-void            myacquire(uint*);
+void            spinacquire(uint*);
 void            futexacquire(uint*,int);
 void            myrelease(uint*);
 void            initmylock(uint* );

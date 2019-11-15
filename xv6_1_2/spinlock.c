@@ -23,7 +23,7 @@ initmylock(uint* lk){
 }
 
 void
-myacquire(uint *lk){
+spinacquire(uint *lk){
     while(xchg(lk, 1) != 0)
     ;
 }
