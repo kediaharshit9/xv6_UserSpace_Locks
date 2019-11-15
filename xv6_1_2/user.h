@@ -27,7 +27,7 @@ int counter_init(void);
 int counter_get(void);
 int counter_set(int);
 int my_lock_spin(void);
-int my_lock_futex(void);
+int my_lock_futex(int);
 int my_unlock(void);
 
 // ulib.c

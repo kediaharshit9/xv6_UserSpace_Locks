@@ -130,7 +130,9 @@ sys_my_lock_spin(void)
 int
 sys_my_lock_futex(void)
 {
-  futexacquire(&count_lock,1000);
+  int n;
+  argint(0, &n);
+  futexacquire(&count_lock,n);
   return 0;
 }
 

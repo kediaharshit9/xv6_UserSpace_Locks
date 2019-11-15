@@ -11,7 +11,7 @@ main(int argc, char *argv[])
 	{
 		for(int i=0; i<100000; i++)
 		{
-			my_lock_futex();
+			my_lock_futex(10000);
 			x=counter_get();
 			counter_set(x+1);	
 			my_unlock();
@@ -22,7 +22,7 @@ main(int argc, char *argv[])
 	{		
 		for(int i=0; i<100000;i++)
 		{
-			my_lock_futex();
+			my_lock_futex(10000);
 			x=counter_get();
 			counter_set(x+1);	
 			my_unlock();
