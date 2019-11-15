@@ -9,7 +9,7 @@ main(int argc, char *argv[])
 	int x;
 	if(fork()==0)
 	{
-		for(int i=0; i<1000000; i++)
+		for(int i=0; i<100000; i++)
 		{
 			my_lock_spin();
 			x=counter_get();
