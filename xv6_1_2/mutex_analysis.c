@@ -3,13 +3,14 @@
 #include "user.h"
 #define LOOP 100000
 #define PROCESSES 4
-#define COUNT 1000
+#define COUNT 100000
 
 void spin_lock_time(){
 
 	for(int j=0;j<PROCESSES;++j){
 		if(fork()==0)
-		{
+		{	
+			int x;
 			for(int i=0; i<LOOP; i++)
 			{
 				my_lock_spin();
@@ -32,6 +33,7 @@ void futex_lock_time(){
 	for(int j=0;j<PROCESSES;++j){
 		if(fork()==0)
 		{
+			int x;
 			for(int i=0; i<LOOP; i++)
 			{
 				my_lock_futex(COUNT);
