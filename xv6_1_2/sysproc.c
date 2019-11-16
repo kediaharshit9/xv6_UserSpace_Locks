@@ -10,7 +10,8 @@
 
 
 
-int count;
+int count;  // shared variable
+
 uint count_lock;
 
 int
@@ -99,14 +100,14 @@ sys_uptime(void)
 int
 sys_counter_init(void)
 { 
-  count = 0;
   initmylock(&count_lock);
+  count = 0;
   return 1;
 }
 
 
 int
-sys_counter_get(void)
+sys_counter_get(void)  
 {
   return count;
 }

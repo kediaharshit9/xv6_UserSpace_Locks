@@ -13,7 +13,7 @@ main(int argc, char *argv[])
 		{
 			counter_set(counter_get()+1);
 		}
-		printf(1, "%d %d\n",getpid(), counter_get());
+		printf(1, "pid : %d %d\n",getpid(), counter_get());
 	}
 	else
 	{
@@ -21,7 +21,7 @@ main(int argc, char *argv[])
 		{
 			counter_set(counter_get()+1);
 		}	
-		printf(1, "%d %d\n",getpid(), counter_get());
+		printf(1, "pid : %d %d\n",getpid(), counter_get());
 		wait(); 
 	}
 	
